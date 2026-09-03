@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hydro Owner Login</title>
+  <meta name="robots" content="noindex,nofollow">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config={theme:{extend:{colors:{hydro:{blue:'#002244',orange:'#cc5500',light:'#f4f7f6'}}}}}
+  </script>
+</head>
+<body class="min-h-screen bg-hydro-light flex items-center justify-center p-5">
+  <main class="w-full max-w-md">
+    <div class="bg-white rounded-3xl shadow-xl border border-gray-100 p-7 sm:p-9">
+      <div class="text-center">
+        <img src="HydroLogo.png" alt="Hydro Bar and Grill" class="h-20 mx-auto object-contain">
+        <p class="text-hydro-orange uppercase tracking-[.2em] text-xs font-bold mt-5">Private Access</p>
+        <h1 class="text-3xl font-bold text-hydro-blue mt-2">Owner Login</h1>
+        <p class="text-gray-500 text-sm mt-2">Sign in to edit the Hydro website.</p>
+      </div>
+
+      <form id="login-form" class="space-y-4 mt-8">
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">Email</label>
+          <input id="email" type="email" autocomplete="email" required class="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-hydro-orange" placeholder="owner@example.com">
+        </div>
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">Password</label>
+          <input id="password" type="password" autocomplete="current-password" required class="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-hydro-orange" placeholder="••••••••">
+        </div>
+        <button id="login-btn" class="w-full bg-hydro-orange hover:bg-hydro-blue text-white font-bold py-3 rounded-xl transition">Sign In</button>
+      </form>
+
+      <div id="message" class="hidden mt-4 rounded-xl p-3 text-sm"></div>
+
+      <p class="text-xs text-gray-400 text-center mt-7">
+        Authorized Hydro management only.
+      </p>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="auth-config.js"></script>
+  <script>
+    const cfg = window.HYDRO_AUTH;
+    const msg = document.getElementById("message");
+    const btn = document.getElementById("login-btn");
+
+    function show(text, error=false){
+      msg.className = error
+        ? "mt-4 rounded-xl p-3 text-sm bg-red-50 text-red-700 border border-red-200"
+        : "mt-4 rounded-xl p-3 text-sm bg-green-50 text-green-700 border border-green-200";
+      msg.textContent = text;
+    }
+
+    if(!cfg || cfg.SUPABASE_URL.startsWith("PASTE_")){
+      show("Owner login is not configured yet. Complete auth-config.js first.", true);
+    }
+
+    const supabaseClient = window.supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY);
+
+    supabaseClient.auth.getSession().then(({data})=>{
+      if(data.session) location.replace("admin.html");
+    });
+
+    document.getElementById("login-form").addEventListener("submit", async (e)=>{
+      e.preventDefault();
+      btn.disabled = true;
+      btn.textContent = "Signing In...";
+
+      const {error} = await supabaseClient.auth.signInWithPassword({
+        email: document.getElementById("email").value.trim(),
+        password: document.getElementById("password").value
+      });
+
+      if(error){
+        show("Sign in failed. Check the email and password.", true);
+        btn.disabled = false;
+        btn.textContent = "Sign In";
+        return;
+      }
+
+      show("Signed in. Opening the owner dashboard...");
+      location.replace("admin.html");
+    });
+  </script>
+</body>
+</html>
