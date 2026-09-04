@@ -56,6 +56,16 @@
     .bg-hydro-blue{background-color:var(--hydro-blue)!important}.text-hydro-blue{color:var(--hydro-blue)!important}.border-hydro-blue{border-color:var(--hydro-blue)!important}
     .bg-hydro-orange{background-color:var(--hydro-orange)!important}.text-hydro-orange{color:var(--hydro-orange)!important}.border-hydro-orange{border-color:var(--hydro-orange)!important}
     .bg-hydro-light{background-color:var(--hydro-light)!important}
+
+    body.spacing-compact main section{padding-top:2.5rem!important;padding-bottom:2.5rem!important}
+    body.spacing-spacious main section{padding-top:7rem!important;padding-bottom:7rem!important}
+    body.body-large{font-size:1.06rem} body.body-compact{font-size:.96rem}
+    .hero-left{text-align:left!important}.hero-left>div{margin-left:0!important;margin-right:auto!important}
+    .button-square a.rounded-full,.button-square button.rounded-full{border-radius:.5rem!important}
+    .button-soft a.rounded-full,.button-soft button.rounded-full{border-radius:1rem!important}
+    .menu-cards article:not(.bg-orange-50\/60){border:1px solid #e5e7eb!important;border-radius:1rem!important;padding:1rem!important;background:#fff}
+    .story-photo-left #story-photo{order:-1}.story-full{grid-template-columns:1fr!important}.story-full #story-photo{max-height:420px}
+    @media(max-width:767px){body.spacing-spacious main section{padding-top:4.5rem!important;padding-bottom:4.5rem!important}}
   </style>
 
   <script type="application/ld+json">
@@ -153,6 +163,13 @@
   </section>
 
 
+  <section id="announcement" class="hidden max-w-6xl mx-auto px-4 sm:px-6 pt-10 scroll-mt-24">
+    <div class="bg-hydro-orange text-white rounded-2xl px-5 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 shadow-sm">
+      <p id="announcement-text" class="font-semibold"></p>
+      <a id="announcement-button" href="#entertainment" class="bg-white text-hydro-blue px-5 py-2.5 rounded-full font-bold text-sm whitespace-nowrap">View Events</a>
+    </div>
+  </section>
+
   <section id="today" class="max-w-6xl mx-auto px-4 sm:px-6 pt-16 scroll-mt-24">
     <div class="rounded-3xl overflow-hidden shadow-sm border border-orange-100 bg-gradient-to-br from-orange-50 to-white">
       <div class="p-6 md:p-10">
@@ -168,7 +185,7 @@
     </div>
   </section>
 
-  <section class="max-w-6xl mx-auto px-4 sm:px-6 py-20">
+  <section id="favorites" class="max-w-6xl mx-auto px-4 sm:px-6 py-20">
     <div class="text-center mb-10">
       <p class="text-hydro-orange uppercase tracking-[.2em] font-bold text-xs mb-3">House Favorites</p>
       <h2 class="font-serif text-4xl md:text-5xl font-bold text-hydro-blue">Start Here</h2>
@@ -302,7 +319,7 @@
 
   <section id="about" class="max-w-6xl mx-auto px-4 sm:px-6 py-20 scroll-mt-24">
     <div class="bg-white rounded-3xl p-6 md:p-10 border shadow-sm grid md:grid-cols-2 gap-10 items-center">
-      <div>
+      <div id="story-copy">
         <p id="story-eyebrow" class="text-hydro-orange uppercase tracking-[.2em] font-bold text-xs">Calistoga Since 1996</p>
         <h2 id="story-title" class="font-serif text-4xl font-bold text-hydro-blue mt-2">Our Story</h2>
         <div class="w-16 h-1 bg-hydro-orange mt-5 mb-6"></div>
@@ -314,6 +331,17 @@
       <img id="story-photo" src="HydroBuilding.jpg" alt="Historic Hydro Bar and Grill building in Calistoga" loading="lazy" class="rounded-2xl shadow-lg w-full aspect-video object-cover">
     </div>
   </section>
+
+  <section id="private-events" class="hidden max-w-6xl mx-auto px-4 sm:px-6 py-20 scroll-mt-24">
+    <div class="bg-hydro-blue text-white rounded-3xl p-7 md:p-10 border border-white/10 shadow-sm">
+      <p id="private-events-eyebrow" class="text-hydro-orange uppercase tracking-[.2em] font-bold text-xs"></p>
+      <div class="grid md:grid-cols-[1fr_auto] gap-6 items-end mt-2">
+        <div><h2 id="private-events-title" class="font-serif text-4xl font-bold"></h2><p id="private-events-text" class="text-gray-300 mt-4 max-w-3xl leading-7"></p></div>
+        <a id="private-events-button" href="tel:+17079429777" class="bg-hydro-orange text-white px-6 py-3 rounded-full font-bold text-center">Call Hydro</a>
+      </div>
+    </div>
+  </section>
+
 </main>
 
 <footer id="contact" class="bg-gray-900 text-white pt-16 pb-28 md:pb-8 border-t-4 border-hydro-orange scroll-mt-20">
@@ -364,30 +392,34 @@
 
 <script src="site-data.js"></script>
 <script>
+  if(new URLSearchParams(location.search).get("preview")==="1"){
+    try{const draft=JSON.parse(localStorage.getItem("hydro-admin-draft-v9")||"null");if(draft?.site&&draft?.menu){window.HYDRO_SITE=draft.site;window.HYDRO_MENU=draft.menu;document.title="Preview — "+document.title}}catch(e){}
+  }
   const HYDRO_MENU = window.HYDRO_MENU || {};
 
 
   function applyOwnerSettings(){
-    const s=window.HYDRO_SITE||{},c=s.content||{},d=s.design||{},p=s.photos||{};
+    const s=window.HYDRO_SITE||{},c=s.content||{},d=s.design||{},p=s.photos||{},l=s.layout||{};
     document.documentElement.style.setProperty("--hydro-blue",d.primary||"#002244");
     document.documentElement.style.setProperty("--hydro-orange",d.accent||"#cc5500");
     document.documentElement.style.setProperty("--hydro-light",d.surface||"#f4f7f6");
-    const overlay=Math.max(35,Math.min(85,Number(d.heroOverlay??68)))/100;
-    const hero=document.getElementById("home");
-    if(hero)hero.style.backgroundImage=`linear-gradient(rgba(0,34,68,${overlay}),rgba(0,34,68,${Math.max(.35,overlay-.18)})),url('${p.hero||"HydroBuilding.jpg"}')`;
+    document.body.classList.toggle("spacing-compact",l.spacing==="compact");document.body.classList.toggle("spacing-spacious",l.spacing==="spacious");
+    document.body.classList.toggle("body-large",d.bodyScale==="large");document.body.classList.toggle("body-compact",d.bodyScale==="compact");
+    document.body.classList.toggle("button-square",d.buttonStyle==="square");document.body.classList.toggle("button-soft",d.buttonStyle==="soft");
+    const overlay=Math.max(35,Math.min(85,Number(d.heroOverlay??68)))/100,hero=document.getElementById("home");
+    if(hero){hero.style.backgroundImage=`linear-gradient(rgba(0,34,68,${overlay}),rgba(0,34,68,${Math.max(.35,overlay-.18)})),url('${p.hero||"HydroBuilding.jpg"}')`;hero.style.backgroundPosition=l.heroPosition||"center";hero.classList.toggle("hero-left",l.heroAlignment==="left");hero.style.minHeight=l.heroHeight==="compact"?"560px":l.heroHeight==="tall"?"820px":"720px"}
     const setText=(id,val)=>{const el=document.getElementById(id);if(el&&val!==undefined)el.textContent=val};
-    setText("hero-eyebrow",c.heroEyebrow);
-    const hh=document.getElementById("hero-headline");
-    if(hh&&c.heroHeadline)hh.innerHTML=String(c.heroHeadline).split("\n").map(x=>x.replace(/[&<>]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[m]))).join("<br>");
-    setText("hero-subheadline",c.heroSubheadline);setText("weekday-hours",c.weekdayHours);setText("weekend-hours",c.weekendHours);setText("happy-hour-summary",c.happyHour);
-    setText("story-eyebrow",c.storyEyebrow);setText("story-title",c.storyTitle);setText("story-p1",c.storyParagraph1);setText("story-p2",c.storyParagraph2);
-    const nl=document.getElementById("nav-logo"),fl=document.getElementById("footer-logo"),sp=document.getElementById("story-photo"),cp=document.getElementById("cocktails-photo");
-    if(nl)nl.src=p.logo||"HydroLogo.png";if(fl)fl.src=p.logo||"HydroLogo.png";if(sp)sp.src=p.story||"HydroBuilding.jpg";if(cp)cp.src=p.cocktails||"CraftCocktails.jpg";
-    const today=document.getElementById("today"),events=document.getElementById("entertainment"),story=document.getElementById("about");
-    if(today)today.hidden=c.showToday===false;if(events)events.hidden=c.showEvents===false;if(story)story.hidden=c.showStory===false;
+    setText("hero-eyebrow",c.heroEyebrow);const hh=document.getElementById("hero-headline");if(hh&&c.heroHeadline)hh.innerHTML=String(c.heroHeadline).split("\n").map(x=>x.replace(/[&<>]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[m]))).join("<br>");
+    ["hero-subheadline","weekday-hours","weekend-hours","happy-hour-summary","story-eyebrow","story-title","story-p1","story-p2"].forEach(id=>{const key={"hero-subheadline":"heroSubheadline","weekday-hours":"weekdayHours","weekend-hours":"weekendHours","happy-hour-summary":"happyHour","story-eyebrow":"storyEyebrow","story-title":"storyTitle","story-p1":"storyParagraph1","story-p2":"storyParagraph2"}[id];setText(id,c[key])});
+    const nl=document.getElementById("nav-logo"),fl=document.getElementById("footer-logo"),sp=document.getElementById("story-photo"),cp=document.getElementById("cocktails-photo");if(nl)nl.src=p.logo||"HydroLogo.png";if(fl)fl.src=p.logo||"HydroLogo.png";if(sp)sp.src=p.story||"HydroBuilding.jpg";if(cp)cp.src=p.cocktails||"CraftCocktails.jpg";
+    const visibility={today:c.showToday!==false,favorites:l.showFavorites!==false,drinks:l.showDrinks!==false,"happy-hour":l.showHappyHour!==false,entertainment:c.showEvents!==false,about:c.showStory!==false,"private-events":l.showPrivateEvents===true};
+    Object.entries(visibility).forEach(([id,show])=>{const el=document.getElementById(id);if(el)el.hidden=!show});
     if(d.headingStyle==="sans")document.querySelectorAll(".font-serif").forEach(el=>el.style.fontFamily="Inter,sans-serif");
-    if(d.cornerStyle==="square")document.querySelectorAll(".rounded-3xl,.rounded-2xl").forEach(el=>el.style.borderRadius=".25rem");
-    if(d.cornerStyle==="soft")document.querySelectorAll(".rounded-3xl").forEach(el=>el.style.borderRadius=".9rem");
+    if(d.cornerStyle==="square")document.querySelectorAll(".rounded-3xl,.rounded-2xl").forEach(el=>el.style.borderRadius=".25rem");if(d.cornerStyle==="soft")document.querySelectorAll(".rounded-3xl").forEach(el=>el.style.borderRadius=".9rem");
+    const story=document.querySelector("#about>div");if(story){story.classList.remove("story-photo-left","story-full");if(l.storyLayout==="image-left")story.classList.add("story-photo-left");if(l.storyLayout==="full")story.classList.add("story-full")}
+    const ann=l.announcement||{};const annSec=document.getElementById("announcement");if(annSec){annSec.hidden=!ann.enabled;annSec.classList.toggle("hidden",!ann.enabled);setText("announcement-text",ann.text||"");const a=document.getElementById("announcement-button");if(a){a.textContent=ann.buttonLabel||"Learn More";a.href=ann.buttonHref||"#"}}
+    const pe=l.privateEvents||{};setText("private-events-eyebrow",pe.eyebrow);setText("private-events-title",pe.title);setText("private-events-text",pe.text);const peb=document.getElementById("private-events-button");if(peb){peb.textContent=pe.buttonLabel||"Contact Hydro";peb.href=pe.buttonHref||"tel:+17079429777"}
+    const order=Array.isArray(l.sectionOrder)?l.sectionOrder:[];const main=document.querySelector("main");order.forEach(id=>{const el=document.getElementById(id);if(el&&main)main.appendChild(el)});
   }
   applyOwnerSettings();
 
@@ -422,7 +454,7 @@
         </p>
       </div>
 
-      <div class="grid md:grid-cols-2 gap-x-10 gap-y-5">
+      <div class="${window.HYDRO_SITE?.layout?.menuLayout==='single-column'?'grid grid-cols-1 gap-y-5':window.HYDRO_SITE?.layout?.menuLayout==='cards'?'menu-cards grid md:grid-cols-2 gap-5':'grid md:grid-cols-2 gap-x-10 gap-y-5'}">
         ${items.map(item => `
           <article class="${item.special ? 'bg-orange-50/60 border border-orange-100 rounded-2xl p-4' : 'pb-4 border-b border-gray-100'}">
             ${item.special ? '<span class="text-[10px] uppercase tracking-widest text-hydro-orange font-bold">Special</span>' : ''}
@@ -476,6 +508,7 @@
   `).join("");
 
   const eventsGrid = document.getElementById("events-grid");
+  if(window.HYDRO_SITE?.layout?.eventsLayout==="list")eventsGrid.className="grid grid-cols-1 gap-3 mt-10";
   eventsGrid.innerHTML = window.HYDRO_SITE.events.map(event => `
     <article class="bg-white/5 p-6 rounded-2xl border border-white/10">
       <span class="text-hydro-orange font-bold text-xl">${event.day}</span>

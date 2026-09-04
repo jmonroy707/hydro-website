@@ -74,13 +74,51 @@ window.HYDRO_SITE = {
     "surface": "#f4f7f6",
     "headingStyle": "serif",
     "cornerStyle": "rounded",
-    "heroOverlay": 68
+    "heroOverlay": 68,
+    "buttonStyle": "pill",
+    "bodyScale": "normal"
   },
   "photos": {
     "hero": "HydroBuilding.jpg",
     "logo": "HydroLogo.png",
     "story": "HydroBuilding.jpg",
     "cocktails": "CraftCocktails.jpg"
+  },
+  "layout": {
+    "sectionOrder": [
+      "today",
+      "favorites",
+      "menus",
+      "drinks",
+      "happy-hour",
+      "entertainment",
+      "about",
+      "private-events"
+    ],
+    "heroAlignment": "center",
+    "heroHeight": "standard",
+    "heroPosition": "center",
+    "spacing": "normal",
+    "menuLayout": "two-column",
+    "eventsLayout": "cards",
+    "storyLayout": "image-right",
+    "showFavorites": true,
+    "showDrinks": true,
+    "showHappyHour": true,
+    "showPrivateEvents": false,
+    "announcement": {
+      "enabled": false,
+      "text": "Tonight at Hydro — dinner, drinks and local entertainment.",
+      "buttonLabel": "View Events",
+      "buttonHref": "#entertainment"
+    },
+    "privateEvents": {
+      "eyebrow": "Celebrate at Hydro",
+      "title": "Private Events & Group Gatherings",
+      "text": "Planning a birthday, team dinner or special gathering? Contact Hydro to talk through the details.",
+      "buttonLabel": "Call Hydro",
+      "buttonHref": "tel:+17079429777"
+    }
   }
 };
 
