@@ -23,10 +23,10 @@ window.HYDRO_SITE = {
         "description": "Garlic Mashed Potatoes, Ratatouille, Cherry Tomatoes & Herbed Butter Sauce"
       },
       {
-        "label": "Tonight",
-        "title": "Open Mic",
-        "price": "6:00 PM",
-        "description": "Live local talent and a relaxed Calistoga night at Hydro."
+        "label": "",
+        "title": "",
+        "price": "",
+        "description": ""
       }
     ]
   },
@@ -79,7 +79,7 @@ window.HYDRO_SITE = {
     "bodyScale": "normal"
   },
   "photos": {
-    "hero": "HydroBuilding.jpg",
+    "hero": "assets/hero.jpg",
     "logo": "HydroLogo.png",
     "story": "HydroBuilding.jpg",
     "cocktails": "CraftCocktails.jpg"
@@ -101,7 +101,7 @@ window.HYDRO_SITE = {
     "spacing": "normal",
     "menuLayout": "two-column",
     "eventsLayout": "cards",
-    "storyLayout": "image-right",
+    "storyLayout": "image-left",
     "showFavorites": true,
     "showDrinks": true,
     "showHappyHour": true,
