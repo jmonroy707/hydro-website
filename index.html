@@ -52,6 +52,10 @@
       .menu-line{align-items:flex-start;gap:.75rem}
       .menu-line .item-price{margin-left:auto;white-space:nowrap;text-align:right}
     }
+    :root{--hydro-blue:#002244;--hydro-orange:#cc5500;--hydro-light:#f4f7f6}
+    .bg-hydro-blue{background-color:var(--hydro-blue)!important}.text-hydro-blue{color:var(--hydro-blue)!important}.border-hydro-blue{border-color:var(--hydro-blue)!important}
+    .bg-hydro-orange{background-color:var(--hydro-orange)!important}.text-hydro-orange{color:var(--hydro-orange)!important}.border-hydro-orange{border-color:var(--hydro-orange)!important}
+    .bg-hydro-light{background-color:var(--hydro-light)!important}
   </style>
 
   <script type="application/ld+json">
@@ -81,7 +85,7 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="h-20 flex items-center justify-between">
       <a href="#home" aria-label="Hydro Bar and Grill home">
-        <img src="HydroLogo.png" alt="Hydro Bar and Grill logo" class="h-11 sm:h-14 w-auto">
+        <img id="nav-logo" src="HydroLogo.png" alt="Hydro Bar and Grill logo" class="h-11 sm:h-14 w-auto">
       </a>
 
       <div class="hidden md:flex items-center gap-6 lg:gap-8">
@@ -116,9 +120,9 @@
 
 <header id="home" class="hero-bg min-h-[720px] h-[92vh] pt-20 flex items-center justify-center text-center text-white">
   <div class="max-w-4xl px-5">
-    <span class="block text-hydro-orange font-bold tracking-[.18em] uppercase text-sm sm:text-base mb-4">Est. 1996 • Calistoga, CA</span>
-    <h1 class="font-serif text-5xl sm:text-6xl md:text-7xl font-bold leading-tight drop-shadow-lg">Your Neighborhood<br>Watering Hole.</h1>
-    <p class="mt-6 text-lg md:text-xl text-gray-200 max-w-2xl mx-auto">Hearty American classics, creative craft cocktails, local beer and warm Napa Valley hospitality.</p>
+    <span id="hero-eyebrow" class="block text-hydro-orange font-bold tracking-[.18em] uppercase text-sm sm:text-base mb-4">Est. 1996 • Calistoga, CA</span>
+    <h1 id="hero-headline" class="font-serif text-5xl sm:text-6xl md:text-7xl font-bold leading-tight drop-shadow-lg">Your Neighborhood<br>Watering Hole.</h1>
+    <p id="hero-subheadline" class="mt-6 text-lg md:text-xl text-gray-200 max-w-2xl mx-auto">Hearty American classics, creative craft cocktails, local beer and warm Napa Valley hospitality.</p>
     <div class="mt-9 flex flex-col sm:flex-row justify-center gap-4">
       <a href="#menus" class="bg-hydro-orange hover:bg-white hover:text-hydro-orange px-8 py-4 rounded-full font-bold text-lg transition shadow-lg">View Menu</a>
       <a href="https://maps.google.com/?q=1403+Lincoln+Avenue+Calistoga+CA" target="_blank" rel="noopener" class="bg-white/15 border-2 border-white hover:bg-white hover:text-hydro-blue px-8 py-4 rounded-full font-bold text-lg transition">Get Directions</a>
@@ -131,15 +135,15 @@
     <div class="bg-white rounded-3xl shadow-xl border border-gray-100 p-5 md:p-8 grid grid-cols-2 lg:grid-cols-4 gap-4">
       <div class="rounded-2xl bg-hydro-light p-5">
         <p class="text-xs uppercase tracking-widest text-gray-500 font-bold">Weekday Hours</p>
-        <p class="font-serif text-xl text-hydro-blue font-bold mt-2">11:30 AM – 9:30 PM</p>
+        <p id="weekday-hours" class="font-serif text-xl text-hydro-blue font-bold mt-2">11:30 AM – 9:30 PM</p>
       </div>
       <div class="rounded-2xl bg-hydro-light p-5">
         <p class="text-xs uppercase tracking-widest text-gray-500 font-bold">Weekend Hours</p>
-        <p class="font-serif text-xl text-hydro-blue font-bold mt-2">11:00 AM – 10:00 PM</p>
+        <p id="weekend-hours" class="font-serif text-xl text-hydro-blue font-bold mt-2">11:00 AM – 10:00 PM</p>
       </div>
       <div class="rounded-2xl bg-orange-50 p-5">
         <p class="text-xs uppercase tracking-widest text-hydro-orange font-bold">Happy Hour</p>
-        <p class="font-serif text-xl text-hydro-blue font-bold mt-2">3–6 PM Mon–Fri</p>
+        <p id="happy-hour-summary" class="font-serif text-xl text-hydro-blue font-bold mt-2">3–6 PM Mon–Fri</p>
       </div>
       <div class="rounded-2xl bg-hydro-blue p-5 text-white">
         <p class="text-xs uppercase tracking-widest text-hydro-orange font-bold">Call Hydro</p>
@@ -213,7 +217,7 @@
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
       <div class="grid lg:grid-cols-5 gap-8 items-stretch">
         <div class="lg:col-span-2 rounded-3xl overflow-hidden min-h-[300px] relative">
-          <img src="CraftCocktails.jpg" alt="Craft cocktails at Hydro Bar and Grill" loading="lazy" class="absolute inset-0 w-full h-full object-cover">
+          <img id="cocktails-photo" src="CraftCocktails.jpg" alt="Craft cocktails at Hydro Bar and Grill" loading="lazy" class="absolute inset-0 w-full h-full object-cover">
         </div>
         <div class="lg:col-span-3">
           <p class="text-hydro-orange uppercase tracking-[.2em] font-bold text-xs">Bar</p>
@@ -299,15 +303,15 @@
   <section id="about" class="max-w-6xl mx-auto px-4 sm:px-6 py-20 scroll-mt-24">
     <div class="bg-white rounded-3xl p-6 md:p-10 border shadow-sm grid md:grid-cols-2 gap-10 items-center">
       <div>
-        <p class="text-hydro-orange uppercase tracking-[.2em] font-bold text-xs">Calistoga Since 1996</p>
-        <h2 class="font-serif text-4xl font-bold text-hydro-blue mt-2">Our Story</h2>
+        <p id="story-eyebrow" class="text-hydro-orange uppercase tracking-[.2em] font-bold text-xs">Calistoga Since 1996</p>
+        <h2 id="story-title" class="font-serif text-4xl font-bold text-hydro-blue mt-2">Our Story</h2>
         <div class="w-16 h-1 bg-hydro-orange mt-5 mb-6"></div>
         <div class="space-y-4 text-gray-600 leading-7">
-          <p>For decades, restaurateurs Alex and Gayle Dierkhising have helped shape Calistoga's hospitality scene, earning recognition including a <em>Wine Spectator</em> Grand Award.</p>
-          <p>Opened in 1996, Hydro Grill remains a neighborhood watering hole in a historic brick building, serving American classics, craft cocktails and a wide selection of local beers.</p>
+          <p id="story-p1">For decades, restaurateurs Alex and Gayle Dierkhising have helped shape Calistoga's hospitality scene, earning recognition including a <em>Wine Spectator</em> Grand Award.</p>
+          <p id="story-p2">Opened in 1996, Hydro Grill remains a neighborhood watering hole in a historic brick building, serving American classics, craft cocktails and a wide selection of local beers.</p>
         </div>
       </div>
-      <img src="HydroBuilding.jpg" alt="Historic Hydro Bar and Grill building in Calistoga" loading="lazy" class="rounded-2xl shadow-lg w-full aspect-video object-cover">
+      <img id="story-photo" src="HydroBuilding.jpg" alt="Historic Hydro Bar and Grill building in Calistoga" loading="lazy" class="rounded-2xl shadow-lg w-full aspect-video object-cover">
     </div>
   </section>
 </main>
@@ -316,7 +320,7 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6">
     <div class="grid md:grid-cols-3 gap-12 mb-12">
       <div>
-        <img src="HydroLogo.png" alt="Hydro Bar and Grill logo" loading="lazy" class="h-20 mb-5 bg-white/10 p-2 rounded-xl">
+        <img id="footer-logo" src="HydroLogo.png" alt="Hydro Bar and Grill logo" loading="lazy" class="h-20 mb-5 bg-white/10 p-2 rounded-xl">
         <p class="text-gray-400">A longtime Napa Valley neighborhood spot for food, drinks and local entertainment.</p>
         <div class="flex gap-3 mt-6">
           <a href="https://www.instagram.com/hydro_grill_bar/" target="_blank" rel="noopener" class="bg-gray-800 hover:bg-hydro-orange px-4 py-2 rounded-full text-sm">Instagram</a>
@@ -360,78 +364,32 @@
 
 <script src="site-data.js"></script>
 <script>
-  const HYDRO_MENU = {
-    starters: [
-      {name:"Fried Calamari", price:"$15.95", description:"With Spicy Chili Aioli."},
-      {name:"Almonds, Walnuts & Peanuts", price:"$6.95", description:"Roasted in Olive Oil and Thyme."},
-      {name:"Spice Rubbed Fried Chicken Wings", price:"$14.95", description:"With Celery Sticks and Ranch Dressing."},
-      {name:"Tropical Shrimp Cocktail", price:"$15.95", description:"Avocado, Cucumber, Mango, Spicy Tomato Sauce and Tortilla Chips."},
-      {name:"French Fries", price:"$6.00", description:""},
-      {name:"Garlic Fries", price:"$7.00", description:""},
-      {name:"Sweet Potato Fries", price:"$7.00", description:""},
-      {name:"Italian Fries", price:"$8.00", description:"With Truffle Oil and Parmesan."},
-      {name:"Appetizer Plate", price:"$19.95", description:"Cheese, Salami, Prosciutto, Olives, Roasted Garlic, Cornichons and Crostini."},
-      {name:"Quesadilla", price:"$9.95", description:"Pepper Jack, Salsa Fresca, Sour Cream and Cilantro. Add Chorizo, Al Pastor or Chicken $4; Avocado $2."},
-      {name:"Baked Cornmeal Dusted Chile Relleno", price:"$15.95", description:"N.Y. Cheddar, Mozzarella, Parmesan, Savory Green Rice, Black Beans and Crème Fraiche."},
-      {name:"Cup of Today's Soup & Small Salad", price:"$16.95", description:"Today's soup served with a small salad of local greens."},
+  const HYDRO_MENU = window.HYDRO_MENU || {};
 
-      {name:"6 Oysters on the Half Shell", price:"$17.95", description:"With Asian Mignonette.", special:true},
-      {name:"Grilled Artichoke", price:"$13.95", description:"With Lemon Aioli or Caesar Dressing.", special:true},
-      {name:"Bruschetta", price:"$11.95", description:"Tomato, Mozzarella, Pesto and Balsamic Reduction.", special:true},
-      {name:"Today's Soup", price:"Small $6–8 / Large $10–12", description:"Please ask your server for today's selection.", special:true}
-    ],
 
-    allDay: [
-      {name:"Grilled Chicken Salad", price:"$18.95", description:"Seasonal Greens, Cherry Tomatoes, Candied Walnuts, Feta and Apple Citrus-Herb Dressing."},
-      {name:"Caesar Salad", price:"$14.95", description:"Romaine, Olive Oil Croustade and Parmesan. Add Grilled Chicken, Prawns or Bacon $5."},
-      {name:'"The Wedgie"', price:"$14.95", description:"Crunchy Iceberg and Creamy Blue Cheese. Add Grilled Chicken, Prawns or Bacon $5."},
-      {name:"House Mixed Greens Salad", price:"$10.95", description:"With Tomatoes and White Wine Vinaigrette."},
-
-      {name:"Hydro's Burgers", price:"$14.95", description:"Choose Hamburger, Turkey, Garden or Fish Burger. Half-pound beef burger on a toasted bun with Pickles, Lettuce, Tomato and Mayonnaise. Cheese +$2, Applewood Bacon +$3, Avocado +$2."},
-      {name:"Hydro Grill's First Place Winner", price:"$24.95", description:"Crispy Prosciutto, Mozzarella Fresca, Grilled Onion and Basil Aioli. Served with French Fries.", special:true},
-      {name:"Macaroni & Cheese", price:"Small $8.95 / Large $13.95", description:"Cheddar, Gouda, Havarti and Buttery Crumb. Add Crispy Prosciutto, Bacon, Ham or Broccoli: Small $10.95 / Large $14.95."},
-      {name:"2 Tacos", price:"$14.95", description:"Chicken, Pork Al Pastor or Fish. Shrimp add $3. With Salsa Fresca, Lettuce and Radishes."},
-      {name:"Crispy Crust Pizza or Calzone", price:"$17.95", description:"Add Pepperoni, Italian Sausage, Margherita, Pesto or Garden Vegetable $3 each."},
-      {name:"Grilled 14oz Rib-Eye Steak", price:"$39.95", description:"Garlic Mashed Potatoes, Fresh Vegetables and Red Wine Sauce. Or substitute French Fries/Sweet Potato Fries and Truffle Butter."},
-      {name:"Pound of Baby Back BBQ Pork Ribs", price:"$29.95", description:"Served with French Fries or Salad."},
-      {name:"Half Pound BBQ Pork Ribs", price:"$17.95", description:"Served with French Fries or Salad."}
-    ],
-
-    lunch: [
-      {name:"Grilled Chicken Breast Sandwich", price:"$14.95", description:"Avocado, Applewood Smoked Bacon, Jack Cheese and Mayonnaise on a Toasted Sesame Bun."},
-      {name:"French Dip Sandwich", price:"$14.95", description:"With Beef Jus and Creamed Horseradish on a Ciabatta Bun."},
-      {name:"Hydro B.L.A.T.", price:"$14.95", description:"Thick Cut Applewood Smoked Bacon, Lettuce, Avocado, Sliced Tomatoes and Basil Aioli on Grilled Sourdough."},
-      {name:"Reuben Sandwich", price:"$14.95", description:"Grilled Rye with Sauerkraut, Swiss Cheese and Creamy Russian Dressing."},
-      {name:"Quiche of the Day", price:"$16.95", description:"Served with Soup or Salad."},
-
-      {name:"Salad Nicoise", price:"$24.95", description:"Fresh Tuna, Anchovies, Green Beans, Black Olives, Egg, Greens, Marble Potatoes and Creamy Vinaigrette.", special:true},
-      {name:"Asian Salad", price:"$24.95", description:"Prawns or Chicken, Napa Cabbage, Mixed Greens, Basil, Mint, Cilantro, Soy-Lime-Rice Wine Dressing and Chopped Peanuts.", special:true},
-      {name:"Grilled Salmon Salad", price:"$25.95", description:"Local Greens, Cherry Tomatoes, Marinated Fennel, Radishes and Citrus Dressing.", special:true},
-      {name:"Pasta with Mushrooms & Broccoli", price:"$19.95", description:"Choice of Marinara, Pesto or Alfredo. Add Grilled Chicken, Sausage or Prawns $6; Seared Salmon or Ahi Tuna $10.", special:true},
-      {name:"Ravioli with Spinach", price:"$17.95", description:"Mozzarella and Fresh Herbs with Marinara, Pesto or Alfredo. Add Chicken, Sausage or Prawns $6.", special:true},
-      {name:"Short Ribs", price:"$32.95", description:"Vegetables, Garlic Mashed Potatoes or Pasta and Red Wine Sauce.", special:true}
-    ],
-
-    dinner: [
-      {name:"Seared Salmon", price:"$34.95", description:"Garlic Mashed Potatoes, Ratatouille, Cherry Tomatoes and Herbed Butter Sauce.", special:true},
-      {name:"Seared Pork Chop", price:"$24.95", description:"Green Beans, Mushrooms, Creamer Potatoes and Mustard Sauce.", special:true},
-      {name:"Roasted 1/2 Chicken", price:"$21.95", description:"Garlic Mashed Potatoes, Broccoli, Mushrooms and Garlic Cream Sauce.", special:true},
-      {name:"Short Ribs", price:"$32.95", description:"Vegetables, Garlic Mashed Potatoes or Pasta and Red Wine Sauce.", special:true},
-      {name:"Salad Nicoise", price:"$24.95", description:"Fresh Tuna, Anchovies, Green Beans, Black Olives, Egg, Greens, Marble Potatoes and Creamy Vinaigrette.", special:true},
-      {name:"Asian Salad", price:"$24.95", description:"Prawns or Chicken, Napa Cabbage, Mixed Greens, Basil, Mint, Cilantro, Soy-Lime-Rice Wine Dressing and Chopped Peanuts.", special:true},
-      {name:"Grilled Salmon Salad", price:"$25.95", description:"Local Greens, Cherry Tomatoes, Marinated Fennel, Radishes and Citrus Dressing.", special:true},
-      {name:"Pasta with Mushrooms & Broccoli", price:"$19.95", description:"Choice of Marinara, Pesto or Alfredo. Add Grilled Chicken, Sausage or Prawns $6; Seared Salmon or Ahi Tuna $10.", special:true},
-      {name:"Ravioli with Spinach", price:"$17.95", description:"Mozzarella and Fresh Herbs with Marinara, Pesto or Alfredo. Add Chicken, Sausage or Prawns $6.", special:true}
-    ],
-
-    desserts: [
-      {name:"Lava Cake", price:"$10.00", description:"Chocolate cake with fudge inside and raspberry sauce."},
-      {name:"Seasonal Sundae", price:"$10.00", description:"Ice cream, caramel, chocolate, fruit and nuts."},
-      {name:"Upside-Down Cake", price:"$10.00", description:"White cake, juicy pineapple and vanilla ice cream."},
-      {name:"Root Beer Float", price:"$10.00", description:"Old-fashioned root beer with vanilla ice cream."},
-      {name:"Crème Brûlée", price:"$10.00", description:"Classic house-made vanilla custard."}
-    ]
-  };
+  function applyOwnerSettings(){
+    const s=window.HYDRO_SITE||{},c=s.content||{},d=s.design||{},p=s.photos||{};
+    document.documentElement.style.setProperty("--hydro-blue",d.primary||"#002244");
+    document.documentElement.style.setProperty("--hydro-orange",d.accent||"#cc5500");
+    document.documentElement.style.setProperty("--hydro-light",d.surface||"#f4f7f6");
+    const overlay=Math.max(35,Math.min(85,Number(d.heroOverlay??68)))/100;
+    const hero=document.getElementById("home");
+    if(hero)hero.style.backgroundImage=`linear-gradient(rgba(0,34,68,${overlay}),rgba(0,34,68,${Math.max(.35,overlay-.18)})),url('${p.hero||"HydroBuilding.jpg"}')`;
+    const setText=(id,val)=>{const el=document.getElementById(id);if(el&&val!==undefined)el.textContent=val};
+    setText("hero-eyebrow",c.heroEyebrow);
+    const hh=document.getElementById("hero-headline");
+    if(hh&&c.heroHeadline)hh.innerHTML=String(c.heroHeadline).split("\n").map(x=>x.replace(/[&<>]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[m]))).join("<br>");
+    setText("hero-subheadline",c.heroSubheadline);setText("weekday-hours",c.weekdayHours);setText("weekend-hours",c.weekendHours);setText("happy-hour-summary",c.happyHour);
+    setText("story-eyebrow",c.storyEyebrow);setText("story-title",c.storyTitle);setText("story-p1",c.storyParagraph1);setText("story-p2",c.storyParagraph2);
+    const nl=document.getElementById("nav-logo"),fl=document.getElementById("footer-logo"),sp=document.getElementById("story-photo"),cp=document.getElementById("cocktails-photo");
+    if(nl)nl.src=p.logo||"HydroLogo.png";if(fl)fl.src=p.logo||"HydroLogo.png";if(sp)sp.src=p.story||"HydroBuilding.jpg";if(cp)cp.src=p.cocktails||"CraftCocktails.jpg";
+    const today=document.getElementById("today"),events=document.getElementById("entertainment"),story=document.getElementById("about");
+    if(today)today.hidden=c.showToday===false;if(events)events.hidden=c.showEvents===false;if(story)story.hidden=c.showStory===false;
+    if(d.headingStyle==="sans")document.querySelectorAll(".font-serif").forEach(el=>el.style.fontFamily="Inter,sans-serif");
+    if(d.cornerStyle==="square")document.querySelectorAll(".rounded-3xl,.rounded-2xl").forEach(el=>el.style.borderRadius=".25rem");
+    if(d.cornerStyle==="soft")document.querySelectorAll(".rounded-3xl").forEach(el=>el.style.borderRadius=".9rem");
+  }
+  applyOwnerSettings();
 
   const labels = {
     starters: "Starter Plates",

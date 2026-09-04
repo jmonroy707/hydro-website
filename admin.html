@@ -1,470 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hydro Owner Dashboard</title>
-  <meta name="robots" content="noindex,nofollow">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config={theme:{extend:{colors:{hydro:{blue:'#002244',orange:'#cc5500',light:'#f4f7f6'}}}}}
-  </script>
-  <style>
-    body{background:#f4f7f6}
-    input,textarea,select{width:100%;border:1px solid #d1d5db;border-radius:.75rem;padding:.7rem .85rem;background:#fff}
-    textarea{min-height:88px;resize:vertical}
-    label{display:block;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#6b7280;margin-bottom:.35rem}
-    .section-card{background:#fff;border:1px solid #e5e7eb;border-radius:1.5rem;box-shadow:0 1px 2px rgba(0,0,0,.04)}
-  </style>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="auth-config.js"></script>
-</head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hydro Owner Dashboard</title><meta name="robots" content="noindex,nofollow">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={theme:{extend:{colors:{hydro:{blue:"#002244",orange:"#cc5500",light:"#f4f7f6"}}}}}</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="auth-config.js"></script>
+<style>
+body{background:#f4f7f6}input,textarea,select{width:100%;border:1px solid #d1d5db;border-radius:.75rem;padding:.7rem .85rem;background:#fff}textarea{min-height:90px;resize:vertical}
+label{display:block;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:#6b7280;margin-bottom:.35rem}.card{background:#fff;border:1px solid #e5e7eb;border-radius:1.4rem;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.tab-active{background:#cc5500;color:#fff}.tab-inactive{background:#fff;color:#374151;border:1px solid #e5e7eb}.safe-note{background:#eff6ff;border:1px solid #bfdbfe;color:#1e3a8a}
+</style></head>
 <body class="text-gray-800">
-  <header class="bg-hydro-blue text-white sticky top-0 z-40 shadow-lg">
-    <div class="max-w-7xl mx-auto px-4 py-5 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-      <div>
-        <p class="text-hydro-orange text-xs uppercase tracking-[.2em] font-bold">Hydro Bar & Grill</p>
-        <h1 class="text-3xl font-bold mt-1">Owner Dashboard</h1>
-        <p class="text-gray-300 text-sm mt-1">Manage specials, events, and the full menu.</p>
-      </div>
-      <div class="flex flex-wrap gap-2 items-center">
-        <span id="signed-in-user" class="text-xs text-gray-300 mr-2"></span>
-        <button id="logout" class="bg-white/10 hover:bg-white/20 px-4 py-2 rounded-xl font-semibold">Sign Out</button>
-        <button id="save-local" class="bg-white/10 hover:bg-white/20 px-4 py-2 rounded-xl font-semibold">Save Draft</button>
-        <button id="export" class="bg-hydro-orange hover:bg-white hover:text-hydro-orange px-4 py-2 rounded-xl font-bold">Export site-data.js</button>
-      </div>
-    </div>
-  </header>
+<header class="bg-hydro-blue text-white sticky top-0 z-40 shadow"><div class="max-w-7xl mx-auto px-4 py-4 flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+<div><p class="text-hydro-orange text-xs uppercase tracking-[.2em] font-bold">Hydro Bar & Grill</p><h1 class="text-2xl font-bold">Owner Dashboard</h1><p class="text-gray-300 text-sm">Safe website controls — no coding required.</p></div>
+<div class="flex flex-wrap gap-2 items-center"><span id="signed-in-user" class="text-xs text-gray-300"></span><button id="save-local" class="bg-white/10 px-4 py-2 rounded-xl font-semibold">Save Draft</button><button id="logout" class="bg-white/10 px-4 py-2 rounded-xl font-semibold">Sign Out</button></div></div></header>
+<main class="max-w-7xl mx-auto px-4 py-6">
+<nav id="tabs" class="grid grid-cols-3 md:grid-cols-6 gap-2 mb-6">
+<button data-tab="content">Content</button><button data-tab="menu">Menu</button><button data-tab="events">Events</button><button data-tab="design">Design</button><button data-tab="photos">Photos</button><button data-tab="publish">Publish</button>
+</nav>
 
-  <main class="max-w-7xl mx-auto px-4 py-8 space-y-8">
-    <section class="section-card p-5 md:p-8">
-      <div class="flex justify-between items-start gap-4 mb-6">
-        <div>
-          <p class="text-hydro-orange text-xs uppercase tracking-[.2em] font-bold">Homepage</p>
-          <h2 class="text-2xl font-bold text-hydro-blue">Today at Hydro</h2>
-        </div>
-        <button id="reset" class="text-sm text-gray-500 hover:text-red-600">Reset Draft</button>
-      </div>
+<section id="panel-content" class="tab-panel space-y-6">
+<div class="card p-6"><h2 class="text-2xl font-bold text-hydro-blue">Homepage Content</h2><p class="text-sm text-gray-500 mt-1">Edit words and business information without changing the page structure.</p>
+<div class="grid md:grid-cols-2 gap-4 mt-5"><div><label>Hero Eyebrow</label><input id="heroEyebrow"></div><div><label>Hero Headline</label><textarea id="heroHeadline"></textarea></div>
+<div class="md:col-span-2"><label>Hero Subheadline</label><textarea id="heroSubheadline"></textarea></div><div><label>Weekday Hours</label><input id="weekdayHours"></div><div><label>Weekend Hours</label><input id="weekendHours"></div>
+<div><label>Happy Hour Summary</label><input id="happyHour"></div><div><label>Phone Display</label><input id="phone"></div><div class="md:col-span-2"><label>Address</label><input id="address"></div></div></div>
+<div class="card p-6"><h2 class="text-2xl font-bold text-hydro-blue">Our Story</h2><div class="grid md:grid-cols-2 gap-4 mt-5"><div><label>Eyebrow</label><input id="storyEyebrow"></div><div><label>Title</label><input id="storyTitle"></div>
+<div class="md:col-span-2"><label>Paragraph 1</label><textarea id="storyParagraph1"></textarea></div><div class="md:col-span-2"><label>Paragraph 2</label><textarea id="storyParagraph2"></textarea></div></div></div>
+<div class="card p-6"><h2 class="text-2xl font-bold text-hydro-blue">Section Visibility</h2><p class="safe-note rounded-xl p-3 text-sm mt-3">Layout is locked for safety. The owner can show or hide approved sections, but cannot accidentally delete navigation or break the page.</p>
+<div class="grid md:grid-cols-3 gap-3 mt-5"><label class="normal-case tracking-normal text-sm flex gap-2 items-center"><input id="showToday" type="checkbox" class="!w-auto"> Show Today at Hydro</label>
+<label class="normal-case tracking-normal text-sm flex gap-2 items-center"><input id="showEvents" type="checkbox" class="!w-auto"> Show Events</label><label class="normal-case tracking-normal text-sm flex gap-2 items-center"><input id="showStory" type="checkbox" class="!w-auto"> Show Our Story</label></div></div>
+</section>
 
-      <div class="grid md:grid-cols-3 gap-4 mb-7">
-        <div><label>Headline</label><input id="headline"></div>
-        <div><label>Badge</label><input id="badge"></div>
-        <div><label>Note</label><input id="note"></div>
-      </div>
+<section id="panel-menu" class="tab-panel hidden"><div class="card p-6"><div class="flex flex-col md:flex-row md:items-end justify-between gap-4"><div><h2 class="text-2xl font-bold text-hydro-blue">Menu Editor</h2><p class="text-sm text-gray-500">Edit items, prices, descriptions and specials.</p></div><div class="md:w-72"><label>Category</label><select id="category-select"></select></div></div>
+<div id="menu-items" class="space-y-4 mt-6"></div><button id="add-menu-item" class="mt-5 border-2 border-dashed border-gray-300 rounded-xl px-4 py-3 w-full font-semibold">+ Add Menu Item</button></div></section>
 
-      <div id="today-cards" class="grid md:grid-cols-2 gap-5"></div>
-    </section>
+<section id="panel-events" class="tab-panel hidden"><div class="card p-6"><h2 class="text-2xl font-bold text-hydro-blue">Events & Today at Hydro</h2>
+<h3 class="font-bold mt-5">Today at Hydro</h3><div class="grid md:grid-cols-3 gap-4 mt-3"><div><label>Headline</label><input id="headline"></div><div><label>Badge</label><input id="badge"></div><div><label>Note</label><input id="note"></div></div><div id="today-cards" class="grid md:grid-cols-2 gap-4 mt-4"></div>
+<h3 class="font-bold mt-8">Weekly Events</h3><div id="events" class="space-y-4 mt-3"></div><button id="add-event" class="mt-4 border-2 border-dashed border-gray-300 rounded-xl px-4 py-3 w-full font-semibold">+ Add Event</button></div></section>
 
-    <section class="section-card p-5 md:p-8">
-      <div class="mb-6">
-        <p class="text-hydro-orange text-xs uppercase tracking-[.2em] font-bold">Calendar</p>
-        <h2 class="text-2xl font-bold text-hydro-blue">Weekly Entertainment</h2>
-      </div>
-      <div id="events" class="space-y-5"></div>
-      <button id="add-event" class="mt-5 border-2 border-dashed border-gray-300 hover:border-hydro-orange rounded-xl px-4 py-3 w-full text-gray-600 font-semibold">+ Add Event</button>
-    </section>
+<section id="panel-design" class="tab-panel hidden space-y-6"><div class="card p-6"><h2 class="text-2xl font-bold text-hydro-blue">Design Controls</h2><p class="safe-note rounded-xl p-3 text-sm mt-3">Curated controls only. No custom CSS or free-form layout editing is exposed, so the site stays responsive and hard to break.</p>
+<div class="grid md:grid-cols-3 gap-4 mt-5"><div><label>Preset</label><select id="preset"><option>Hydro Classic</option><option>Warm Napa</option><option>Night Bar</option><option>Clean Modern</option></select></div><div><label>Heading Style</label><select id="headingStyle"><option value="serif">Classic Serif</option><option value="sans">Modern Sans</option></select></div><div><label>Corner Style</label><select id="cornerStyle"><option value="rounded">Rounded</option><option value="soft">Soft</option><option value="square">Square</option></select></div></div>
+<div class="grid md:grid-cols-4 gap-4 mt-5"><div><label>Main Color</label><input id="primary" type="color" class="h-12"></div><div><label>Accent Color</label><input id="accent" type="color" class="h-12"></div><div><label>Background</label><input id="surface" type="color" class="h-12"></div><div><label>Hero Overlay <span id="overlayValue"></span></label><input id="heroOverlay" type="range" min="35" max="85"></div></div>
+<div class="mt-6 flex gap-3"><button id="reset-design" class="border px-4 py-2 rounded-xl font-semibold">Reset Design</button><button id="apply-preset" class="bg-hydro-blue text-white px-4 py-2 rounded-xl font-semibold">Apply Preset</button></div></div></section>
 
-    <section class="section-card p-5 md:p-8">
-      <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-6">
-        <div>
-          <p class="text-hydro-orange text-xs uppercase tracking-[.2em] font-bold">Food</p>
-          <h2 class="text-2xl font-bold text-hydro-blue">Full Menu Editor</h2>
-          <p class="text-gray-500 text-sm mt-1">Add, remove, edit, highlight, or move items between menu categories.</p>
-        </div>
-        <div class="w-full lg:w-72">
-          <label>Menu Category</label>
-          <select id="category-select"></select>
-        </div>
-      </div>
+<section id="panel-photos" class="tab-panel hidden"><div class="card p-6"><h2 class="text-2xl font-bold text-hydro-blue">Photos</h2><p class="text-sm text-gray-500 mt-1">Choose replacement photos. Images are resized in the browser before publishing to keep the site fast.</p><div id="photo-slots" class="grid md:grid-cols-2 gap-5 mt-6"></div></div></section>
 
-      <div id="menu-items" class="space-y-5"></div>
-      <button id="add-menu-item" class="mt-5 border-2 border-dashed border-gray-300 hover:border-hydro-orange rounded-xl px-4 py-3 w-full text-gray-600 font-semibold">+ Add Menu Item</button>
-    </section>
+<section id="panel-publish" class="tab-panel hidden space-y-6"><div class="card p-6"><h2 class="text-2xl font-bold text-hydro-blue">Review & Publish</h2><p class="text-sm text-gray-500 mt-1">Publishing updates the website data and any selected photos. GitHub credentials remain on the server.</p>
+<div class="mt-5"><label>Commit Message</label><input id="publish-message" value="Update Hydro website"></div><div class="flex flex-col sm:flex-row gap-3 mt-5"><button id="publish-secure" class="bg-hydro-orange text-white px-6 py-3 rounded-xl font-bold">Publish Website</button><button id="export-backup" class="border px-6 py-3 rounded-xl font-semibold">Download Data Backup</button></div><div id="secure-publish-status" class="hidden mt-5 rounded-xl p-4 text-sm"></div></div>
+<div class="card p-6"><h3 class="font-bold text-hydro-blue">What stays protected</h3><p class="text-sm text-gray-600 mt-2">Navigation structure, responsive layout, authentication, publishing security, Cloudflare secrets, and GitHub credentials remain locked.</p></div></section>
+</main>
 
-    <section class="section-card p-5 md:p-8">
-      <div class="mb-6">
-        <p class="text-hydro-orange text-xs uppercase tracking-[.2em] font-bold">Preview</p>
-        <h2 class="text-2xl font-bold text-hydro-blue">Today at Hydro Preview</h2>
-      </div>
-      <div id="preview" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
-    </section>
-
-
-    <section class="section-card p-5 md:p-8">
-      <div class="mb-6">
-        <p class="text-hydro-orange text-xs uppercase tracking-[.2em] font-bold">Publishing</p>
-        <h2 class="text-2xl font-bold text-hydro-blue">Publish Website</h2>
-        <p class="text-gray-500 text-sm mt-1">Publish the current menu, specials, and events securely. Repository credentials stay on the server.</p>
-      </div>
-
-      <div>
-        <label>Commit Message</label>
-        <input id="publish-message" value="Update Hydro menu and specials">
-      </div>
-
-      <div class="mt-5 flex flex-col sm:flex-row gap-3">
-        <button id="publish-secure" class="bg-hydro-orange hover:bg-hydro-blue text-white px-6 py-3 rounded-xl font-bold">Publish Website</button>
-        <button id="export-backup" class="border border-gray-300 hover:border-hydro-blue px-6 py-3 rounded-xl font-semibold">Download Backup</button>
-      </div>
-
-      <div id="secure-publish-status" class="hidden mt-5 rounded-xl p-4 text-sm"></div>
-    </section>
-
-    <section class="bg-orange-50 border border-orange-100 rounded-2xl p-5">
-      <h3 class="font-bold text-hydro-blue">Publishing changes</h3>
-      <ol class="list-decimal ml-5 mt-3 space-y-2 text-sm text-gray-700">
-        <li>Make your edits.</li>
-        <li>Click <strong>Save Draft</strong> if you want to keep working later on this device.</li>
-        <li>Click <strong>Publish Website</strong>. Your authenticated session is verified by the server before any GitHub update is allowed.</li>
-        <li>If publishing directly, GitHub Pages will rebuild from the committed change.</li>
-      </ol>
-      <p class="text-xs text-gray-500 mt-4">The editor does not store GitHub credentials or repository tokens.</p>
-    </section>
-  </main>
-
-  <script src="site-data.js"></script>
-  <script>
-    const STORAGE_KEY = "hydro-admin-draft-v2";
-    const CATEGORY_LABELS = {
-      starters:"Starters",
-      salads:"Salads",
-      favorites:"All Day",
-      lunch:"Lunch",
-      dinner:"Dinner",
-      desserts:"Desserts"
-    };
-
-    const original = {
-      site: JSON.parse(JSON.stringify(window.HYDRO_SITE)),
-      menu: JSON.parse(JSON.stringify(window.HYDRO_MENU))
-    };
-
-    let stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
-    let state = stored || JSON.parse(JSON.stringify(original));
-    let activeCategory = Object.keys(CATEGORY_LABELS)[0];
-
-    const $ = id => document.getElementById(id);
-    const esc = s => String(s ?? "").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
-
-    function renderTop(){
-      $("headline").value = state.site.today.headline || "";
-      $("badge").value = state.site.today.badge || "";
-      $("note").value = state.site.today.note || "";
-
-      $("today-cards").innerHTML = state.site.today.cards.map((c,i)=>`
-        <div class="rounded-2xl bg-gray-50 border p-4">
-          <div class="flex justify-between items-center mb-4">
-            <h3 class="font-bold text-hydro-blue">Card ${i+1}</h3>
-          </div>
-          <div class="grid sm:grid-cols-2 gap-3">
-            <div><label>Label</label><input data-card="${i}" data-field="label" value="${esc(c.label)}"></div>
-            <div><label>Price / Time</label><input data-card="${i}" data-field="price" value="${esc(c.price)}"></div>
-            <div class="sm:col-span-2"><label>Title</label><input data-card="${i}" data-field="title" value="${esc(c.title)}"></div>
-            <div class="sm:col-span-2"><label>Description</label><textarea data-card="${i}" data-field="description">${esc(c.description)}</textarea></div>
-          </div>
-        </div>
-      `).join("");
-
-      $("events").innerHTML = state.site.events.map((e,i)=>`
-        <div class="rounded-2xl bg-gray-50 border p-4">
-          <div class="flex justify-between items-center mb-4">
-            <h3 class="font-bold text-hydro-blue">Event ${i+1}</h3>
-            <button data-remove-event="${i}" class="text-sm text-red-600 hover:underline">Remove</button>
-          </div>
-          <div class="grid sm:grid-cols-4 gap-3">
-            <div><label>Day</label><input data-event="${i}" data-field="day" value="${esc(e.day)}"></div>
-            <div><label>Time</label><input data-event="${i}" data-field="time" value="${esc(e.time)}"></div>
-            <div class="sm:col-span-2"><label>Title</label><input data-event="${i}" data-field="title" value="${esc(e.title)}"></div>
-            <div class="sm:col-span-4"><label>Description</label><textarea data-event="${i}" data-field="description">${esc(e.description)}</textarea></div>
-          </div>
-        </div>
-      `).join("");
-
-      bindTop();
-      renderPreview();
-    }
-
-    function renderCategorySelect(){
-      $("category-select").innerHTML = Object.entries(CATEGORY_LABELS).map(([key,label]) =>
-        `<option value="${key}" ${key===activeCategory?'selected':''}>${label}</option>`
-      ).join("");
-    }
-
-    function renderMenu(){
-      const items = state.menu[activeCategory] || [];
-      $("menu-items").innerHTML = items.length ? items.map((item,i)=>`
-        <div class="rounded-2xl bg-gray-50 border p-4">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
-            <div>
-              <p class="text-xs uppercase tracking-widest text-gray-400 font-bold">Item ${i+1}</p>
-              <h3 class="font-bold text-hydro-blue">${esc(item.name || "Untitled Item")}</h3>
-            </div>
-            <div class="flex items-center gap-4">
-              <label class="!mb-0 normal-case tracking-normal text-sm flex items-center gap-2">
-                <input type="checkbox" class="!w-auto" data-menu-special="${i}" ${item.special ? "checked" : ""}>
-                Highlight as Special
-              </label>
-              <button data-remove-menu="${i}" class="text-sm text-red-600 hover:underline">Remove</button>
-            </div>
-          </div>
-
-          <div class="grid md:grid-cols-12 gap-3">
-            <div class="md:col-span-5">
-              <label>Name</label>
-              <input data-menu="${i}" data-field="name" value="${esc(item.name)}">
-            </div>
-            <div class="md:col-span-3">
-              <label>Price</label>
-              <input data-menu="${i}" data-field="price" value="${esc(item.price)}">
-            </div>
-            <div class="md:col-span-4">
-              <label>Move to Category</label>
-              <select data-move-menu="${i}">
-                ${Object.entries(CATEGORY_LABELS).map(([key,label])=>`<option value="${key}" ${key===activeCategory?'selected':''}>${label}</option>`).join("")}
-              </select>
-            </div>
-            <div class="md:col-span-12">
-              <label>Description</label>
-              <textarea data-menu="${i}" data-field="description">${esc(item.description)}</textarea>
-            </div>
-          </div>
-        </div>
-      `).join("") : `<div class="text-center py-10 text-gray-500">No items in this category yet.</div>`;
-
-      bindMenu();
-    }
-
-    function bindTop(){
-      document.querySelectorAll("[data-card]").forEach(el=>{
-        el.addEventListener("input",()=>{
-          state.site.today.cards[+el.dataset.card][el.dataset.field] = el.value;
-          renderPreview();
-        });
-      });
-
-      document.querySelectorAll("[data-event]").forEach(el=>{
-        el.addEventListener("input",()=>{
-          state.site.events[+el.dataset.event][el.dataset.field] = el.value;
-        });
-      });
-
-      document.querySelectorAll("[data-remove-event]").forEach(btn=>{
-        btn.addEventListener("click",()=>{
-          state.site.events.splice(+btn.dataset.removeEvent,1);
-          renderTop();
-        });
-      });
-    }
-
-    function bindMenu(){
-      document.querySelectorAll("[data-menu]").forEach(el=>{
-        el.addEventListener("input",()=>{
-          state.menu[activeCategory][+el.dataset.menu][el.dataset.field] = el.value;
-        });
-      });
-
-      document.querySelectorAll("[data-menu-special]").forEach(el=>{
-        el.addEventListener("change",()=>{
-          const item = state.menu[activeCategory][+el.dataset.menuSpecial];
-          item.special = el.checked;
-          if(!el.checked) delete item.special;
-        });
-      });
-
-      document.querySelectorAll("[data-remove-menu]").forEach(btn=>{
-        btn.addEventListener("click",()=>{
-          const i = +btn.dataset.removeMenu;
-          if(confirm(`Remove "${state.menu[activeCategory][i]?.name || "this item"}"?`)){
-            state.menu[activeCategory].splice(i,1);
-            renderMenu();
-          }
-        });
-      });
-
-      document.querySelectorAll("[data-move-menu]").forEach(sel=>{
-        sel.addEventListener("change",()=>{
-          const i = +sel.dataset.moveMenu;
-          const target = sel.value;
-          if(target === activeCategory) return;
-          const [item] = state.menu[activeCategory].splice(i,1);
-          state.menu[target].push(item);
-          renderMenu();
-        });
-      });
-    }
-
-    ["headline","badge","note"].forEach(id=>{
-      $(id).addEventListener("input",()=>{
-        state.site.today[id] = $(id).value;
-        renderPreview();
-      });
-    });
-
-    function renderPreview(){
-      $("preview").innerHTML = state.site.today.cards.map(c=>`
-        <article class="rounded-2xl border border-orange-100 p-5">
-          <p class="text-[10px] uppercase tracking-[.18em] font-bold text-hydro-orange">${esc(c.label)}</p>
-          <div class="flex justify-between gap-3 mt-2">
-            <h3 class="font-bold text-hydro-blue">${esc(c.title)}</h3>
-            <span class="text-hydro-orange font-bold whitespace-nowrap">${esc(c.price)}</span>
-          </div>
-          <p class="text-sm text-gray-500 mt-3">${esc(c.description)}</p>
-        </article>
-      `).join("");
-    }
-
-    $("category-select").addEventListener("change",()=>{
-      activeCategory = $("category-select").value;
-      renderMenu();
-    });
-
-    $("add-event").onclick = ()=>{
-      state.site.events.push({day:"",title:"New Event",time:"",description:""});
-      renderTop();
-    };
-
-    $("add-menu-item").onclick = ()=>{
-      state.menu[activeCategory].push({
-        name:"New Menu Item",
-        price:"$0.00",
-        description:"",
-        special:false
-      });
-      renderMenu();
-      window.scrollBy({top:250,behavior:"smooth"});
-    };
-
-    $("save-local").onclick = ()=>{
-      state.site.today.headline = $("headline").value;
-      state.site.today.badge = $("badge").value;
-      state.site.today.note = $("note").value;
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-      $("save-local").textContent = "Saved ✓";
-      setTimeout(()=>$("save-local").textContent="Save Draft",1400);
-    };
-
-    $("reset").onclick = ()=>{
-      if(confirm("Reset all admin changes back to the data currently loaded from site-data.js?")){
-        localStorage.removeItem(STORAGE_KEY);
-        state = JSON.parse(JSON.stringify(original));
-        activeCategory = Object.keys(CATEGORY_LABELS)[0];
-        renderCategorySelect();
-        renderTop();
-        renderMenu();
-      }
-    };
-
-    $("export").onclick = ()=>{
-      state.site.today.headline = $("headline").value;
-      state.site.today.badge = $("badge").value;
-      state.site.today.note = $("note").value;
-
-      const output =
-`window.HYDRO_SITE = ${JSON.stringify(state.site,null,2)};
+<script src="site-data.js"></script>
+<script>
+const STORAGE_KEY="hydro-admin-draft-v8-1",CATEGORY_LABELS={starters:"Starter Plates",allDay:"All Day",lunch:"Before 4 PM",dinner:"After 4 PM",desserts:"Desserts"};
+const PHOTO_META={hero:{label:"Hero / Building Photo",path:"assets/hero.jpg",fallback:"HydroBuilding.jpg",kind:"photo"},logo:{label:"Hydro Logo",path:"assets/logo.png",fallback:"HydroLogo.png",kind:"logo"},story:{label:"Our Story Photo",path:"assets/story.jpg",fallback:"HydroBuilding.jpg",kind:"photo"},cocktails:{label:"Cocktails Photo",path:"assets/cocktails.jpg",fallback:"CraftCocktails.jpg",kind:"photo"}};
+const original={site:JSON.parse(JSON.stringify(window.HYDRO_SITE)),menu:JSON.parse(JSON.stringify(window.HYDRO_MENU))};let state=JSON.parse(localStorage.getItem(STORAGE_KEY)||"null")||JSON.parse(JSON.stringify(original)),activeCategory="starters",pendingPhotos={};
+const $=id=>document.getElementById(id),esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+document.querySelectorAll("#tabs button").forEach(btn=>{btn.className="tab-inactive rounded-xl py-3 font-bold";btn.onclick=()=>switchTab(btn.dataset.tab)});function switchTab(name){document.querySelectorAll(".tab-panel").forEach(x=>x.classList.add("hidden"));$("panel-"+name).classList.remove("hidden");document.querySelectorAll("#tabs button").forEach(b=>b.className=(b.dataset.tab===name?"tab-active":"tab-inactive")+" rounded-xl py-3 font-bold")}switchTab("content");
+function loadContent(){const c=state.site.content||{};["heroEyebrow","heroHeadline","heroSubheadline","weekdayHours","weekendHours","happyHour","phone","address","storyEyebrow","storyTitle","storyParagraph1","storyParagraph2"].forEach(k=>$(k).value=c[k]??"");["showToday","showEvents","showStory"].forEach(k=>$(k).checked=c[k]!==false)}
+function syncContent(){const c=state.site.content||(state.site.content={});["heroEyebrow","heroHeadline","heroSubheadline","weekdayHours","weekendHours","happyHour","phone","address","storyEyebrow","storyTitle","storyParagraph1","storyParagraph2"].forEach(k=>c[k]=$(k).value);["showToday","showEvents","showStory"].forEach(k=>c[k]=$(k).checked)}
+function loadEvents(){$("headline").value=state.site.today.headline||"";$("badge").value=state.site.today.badge||"";$("note").value=state.site.today.note||"";$("today-cards").innerHTML=state.site.today.cards.map((c,i)=>`<div class="bg-gray-50 border rounded-2xl p-4"><div class="grid sm:grid-cols-2 gap-3"><div><label>Label</label><input data-card="${i}" data-field="label" value="${esc(c.label)}"></div><div><label>Price / Time</label><input data-card="${i}" data-field="price" value="${esc(c.price)}"></div><div class="sm:col-span-2"><label>Title</label><input data-card="${i}" data-field="title" value="${esc(c.title)}"></div><div class="sm:col-span-2"><label>Description</label><textarea data-card="${i}" data-field="description">${esc(c.description)}</textarea></div></div></div>`).join("");document.querySelectorAll("[data-card]").forEach(el=>el.oninput=()=>state.site.today.cards[+el.dataset.card][el.dataset.field]=el.value);$("events").innerHTML=state.site.events.map((e,i)=>`<div class="bg-gray-50 border rounded-2xl p-4"><div class="flex justify-between"><strong>Event ${i+1}</strong><button data-remove-event="${i}" class="text-red-600">Remove</button></div><div class="grid sm:grid-cols-4 gap-3 mt-3"><div><label>Day</label><input data-event="${i}" data-field="day" value="${esc(e.day)}"></div><div><label>Time</label><input data-event="${i}" data-field="time" value="${esc(e.time)}"></div><div class="sm:col-span-2"><label>Title</label><input data-event="${i}" data-field="title" value="${esc(e.title)}"></div><div class="sm:col-span-4"><label>Description</label><textarea data-event="${i}" data-field="description">${esc(e.description)}</textarea></div></div></div>`).join("");document.querySelectorAll("[data-event]").forEach(el=>el.oninput=()=>state.site.events[+el.dataset.event][el.dataset.field]=el.value);document.querySelectorAll("[data-remove-event]").forEach(b=>b.onclick=()=>{state.site.events.splice(+b.dataset.removeEvent,1);loadEvents()})}
+function syncToday(){state.site.today.headline=$("headline").value;state.site.today.badge=$("badge").value;state.site.today.note=$("note").value}
+function renderCategory(){$("category-select").innerHTML=Object.entries(CATEGORY_LABELS).map(([k,v])=>`<option value="${k}" ${k===activeCategory?"selected":""}>${v}</option>`).join("");renderMenu()}
+function renderMenu(){const items=state.menu[activeCategory]||[];$("menu-items").innerHTML=items.map((it,i)=>`<div class="bg-gray-50 border rounded-2xl p-4"><div class="flex justify-between gap-3"><strong>${esc(it.name||"Untitled")}</strong><button data-remove-menu="${i}" class="text-red-600">Remove</button></div><div class="grid md:grid-cols-12 gap-3 mt-3"><div class="md:col-span-5"><label>Name</label><input data-menu="${i}" data-field="name" value="${esc(it.name)}"></div><div class="md:col-span-3"><label>Price</label><input data-menu="${i}" data-field="price" value="${esc(it.price)}"></div><div class="md:col-span-4"><label>Move To</label><select data-move="${i}">${Object.entries(CATEGORY_LABELS).map(([k,v])=>`<option value="${k}" ${k===activeCategory?"selected":""}>${v}</option>`).join("")}</select></div><div class="md:col-span-12"><label>Description</label><textarea data-menu="${i}" data-field="description">${esc(it.description)}</textarea></div><div class="md:col-span-12"><label class="normal-case tracking-normal text-sm flex items-center gap-2"><input class="!w-auto" type="checkbox" data-special="${i}" ${it.special?"checked":""}> Highlight as Special</label></div></div></div>`).join("");document.querySelectorAll("[data-menu]").forEach(el=>el.oninput=()=>state.menu[activeCategory][+el.dataset.menu][el.dataset.field]=el.value);document.querySelectorAll("[data-special]").forEach(el=>el.onchange=()=>state.menu[activeCategory][+el.dataset.special].special=el.checked);document.querySelectorAll("[data-remove-menu]").forEach(b=>b.onclick=()=>{state.menu[activeCategory].splice(+b.dataset.removeMenu,1);renderMenu()});document.querySelectorAll("[data-move]").forEach(sel=>sel.onchange=()=>{const i=+sel.dataset.move,target=sel.value;if(target!==activeCategory){const[it]=state.menu[activeCategory].splice(i,1);state.menu[target].push(it);renderMenu()}})}
+const PRESETS={"Hydro Classic":{primary:"#002244",accent:"#cc5500",surface:"#f4f7f6",headingStyle:"serif",cornerStyle:"rounded",heroOverlay:68},"Warm Napa":{primary:"#4a2f24",accent:"#b45f2a",surface:"#f8f1e7",headingStyle:"serif",cornerStyle:"soft",heroOverlay:62},"Night Bar":{primary:"#111827",accent:"#f97316",surface:"#f3f4f6",headingStyle:"sans",cornerStyle:"rounded",heroOverlay:78},"Clean Modern":{primary:"#1f2937",accent:"#d65a31",surface:"#f8fafc",headingStyle:"sans",cornerStyle:"soft",heroOverlay:58}};
+function loadDesign(){const d=state.site.design||{};["preset","headingStyle","cornerStyle","primary","accent","surface","heroOverlay"].forEach(k=>$(k).value=d[k]??PRESETS["Hydro Classic"][k]);$("overlayValue").textContent=$("heroOverlay").value+"%"}function syncDesign(){const d=state.site.design||(state.site.design={});["preset","headingStyle","cornerStyle","primary","accent","surface"].forEach(k=>d[k]=$(k).value);d.heroOverlay=+$("heroOverlay").value;$("overlayValue").textContent=d.heroOverlay+"%"}
+function renderPhotos(){const p=state.site.photos||(state.site.photos={});$("photo-slots").innerHTML=Object.entries(PHOTO_META).map(([key,m])=>`<div class="border rounded-2xl p-4"><img id="preview-${key}" src="${esc(p[key]||m.fallback)}" class="w-full h-52 object-cover rounded-xl bg-gray-100" alt=""><h3 class="font-bold mt-3">${m.label}</h3><p class="text-xs text-gray-500 mt-1">Current: ${esc(p[key]||m.fallback)}</p><input type="file" accept="image/png,image/jpeg,image/webp" data-photo="${key}" class="mt-3"><button data-clear-photo="${key}" class="text-sm text-red-600 mt-2">Discard selected replacement</button></div>`).join("");document.querySelectorAll("[data-photo]").forEach(inp=>inp.onchange=async()=>{const key=inp.dataset.photo,file=inp.files&&inp.files[0];if(!file)return;try{const packed=await compressImage(file,PHOTO_META[key].kind);pendingPhotos[key]=packed;$("preview-"+key).src=packed.previewUrl}catch(e){alert(e.message);inp.value=""}});document.querySelectorAll("[data-clear-photo]").forEach(b=>b.onclick=()=>{const key=b.dataset.clearPhoto;if(pendingPhotos[key]?.previewUrl)URL.revokeObjectURL(pendingPhotos[key].previewUrl);delete pendingPhotos[key];$("preview-"+key).src=p[key]||PHOTO_META[key].fallback})}
+async function compressImage(file,kind){if(file.size>12*1024*1024)throw new Error("Choose an image under 12 MB.");const bitmap=await createImageBitmap(file),max=kind==="logo"?1200:1800,scale=Math.min(1,max/Math.max(bitmap.width,bitmap.height)),canvas=document.createElement("canvas");canvas.width=Math.round(bitmap.width*scale);canvas.height=Math.round(bitmap.height*scale);canvas.getContext("2d").drawImage(bitmap,0,0,canvas.width,canvas.height);const type=kind==="logo"?"image/png":"image/jpeg",quality=kind==="logo"?undefined:.86,blob=await new Promise(r=>canvas.toBlob(r,type,quality));if(!blob)throw new Error("Could not prepare this image.");const base64=await blobToBase64(blob);return{base64,type,size:blob.size,previewUrl:URL.createObjectURL(blob)}}function blobToBase64(blob){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(String(r.result).split(",")[1]);r.onerror=rej;r.readAsDataURL(blob)})}
+$("category-select").onchange=e=>{activeCategory=e.target.value;renderMenu()};$("add-menu-item").onclick=()=>{state.menu[activeCategory].push({name:"New Menu Item",price:"$0.00",description:"",special:false});renderMenu()};$("add-event").onclick=()=>{state.site.events.push({day:"",title:"New Event",time:"",description:""});loadEvents()};$("heroOverlay").oninput=syncDesign;$("apply-preset").onclick=()=>{Object.assign(state.site.design,PRESETS[$("preset").value]);loadDesign()};$("reset-design").onclick=()=>{state.site.design=JSON.parse(JSON.stringify(original.site.design));loadDesign()};["preset","headingStyle","cornerStyle","primary","accent","surface"].forEach(k=>$(k).onchange=syncDesign);
+function syncAll(){syncContent();syncToday();syncDesign()}$("save-local").onclick=()=>{syncAll();localStorage.setItem(STORAGE_KEY,JSON.stringify(state));$("save-local").textContent="Saved ✓";setTimeout(()=>$("save-local").textContent="Save Draft",1200)};
+const authCfg=window.HYDRO_AUTH,supabaseClient=window.supabase.createClient(authCfg.SUPABASE_URL,authCfg.SUPABASE_ANON_KEY);async function requireOwner(){const{data:{session}}=await supabaseClient.auth.getSession();if(!session){location.replace("login.html");throw new Error("Not signed in.")}$("signed-in-user").textContent=session.user.email||"Signed in";return session}$("logout").onclick=async()=>{await supabaseClient.auth.signOut();location.replace("login.html")};
+function dataText(){syncAll();return`window.HYDRO_SITE = ${JSON.stringify(state.site,null,2)};
 
 window.HYDRO_MENU = ${JSON.stringify(state.menu,null,2)};
-`;
-      const blob = new Blob([output], {type:"application/javascript"});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "site-data.js";
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
-    };
-
-
-
-    const authCfg = window.HYDRO_AUTH;
-    const supabaseClient = window.supabase.createClient(authCfg.SUPABASE_URL, authCfg.SUPABASE_ANON_KEY);
-
-    function secureStatus(message, error=false){
-      const box = $("secure-publish-status");
-      box.className = error
-        ? "mt-5 rounded-xl p-4 text-sm border bg-red-50 text-red-800 border-red-200"
-        : "mt-5 rounded-xl p-4 text-sm border bg-green-50 text-green-800 border-green-200";
-      box.textContent = message;
-    }
-
-    function currentSiteDataText(){
-      state.site.today.headline = $("headline").value;
-      state.site.today.badge = $("badge").value;
-      state.site.today.note = $("note").value;
-      return `window.HYDRO_SITE = ${JSON.stringify(state.site,null,2)};\n\nwindow.HYDRO_MENU = ${JSON.stringify(state.menu,null,2)};\n`;
-    }
-
-    async function requireOwner(){
-      const {data:{session}} = await supabaseClient.auth.getSession();
-      if(!session){
-        location.replace("login.html");
-        throw new Error("Not signed in.");
-      }
-      $("signed-in-user").textContent = session.user.email || "Signed in";
-      return session;
-    }
-
-    $("logout").addEventListener("click", async ()=>{
-      await supabaseClient.auth.signOut();
-      location.replace("login.html");
-    });
-
-    $("publish-secure").addEventListener("click", async ()=>{
-      const btn = $("publish-secure");
-      try{
-        const session = await requireOwner();
-
-        if(!authCfg.PUBLISH_API_URL || authCfg.PUBLISH_API_URL.startsWith("PASTE_")){
-          throw new Error("The secure publishing API is not configured yet.");
-        }
-
-        if(!confirm("Publish the current Hydro website changes now?")) return;
-
-        btn.disabled = true;
-        btn.textContent = "Publishing...";
-
-        const res = await fetch(authCfg.PUBLISH_API_URL, {
-          method:"POST",
-          headers:{
-            "Content-Type":"application/json",
-            "Authorization":`Bearer ${session.access_token}`
-          },
-          body:JSON.stringify({
-            content: currentSiteDataText(),
-            message: $("publish-message").value.trim() || "Update Hydro menu and specials"
-          })
-        });
-
-        const payload = await res.json().catch(()=>({}));
-        if(!res.ok) throw new Error(payload.error || payload.message || `Publish failed (${res.status})`);
-
-        secureStatus(`Published successfully${payload.commit ? ` — commit ${payload.commit}` : ""}.`);
-      }catch(err){
-        secureStatus(err.message, true);
-      }finally{
-        btn.disabled = false;
-        btn.textContent = "Publish Website";
-      }
-    });
-
-    $("export-backup").addEventListener("click", ()=>{
-      const blob = new Blob([currentSiteDataText()], {type:"application/javascript"});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "site-data.js";
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
-    });
-
-    requireOwner();
-
-    renderCategorySelect();
-    renderTop();
-    renderMenu();
-  </script>
-</body>
-</html>
+`}function status(msg,error=false){const box=$("secure-publish-status");box.className=(error?"bg-red-50 text-red-800 border-red-200":"bg-green-50 text-green-800 border-green-200")+" mt-5 rounded-xl p-4 text-sm border";box.textContent=msg}
+$("publish-secure").onclick=async()=>{const btn=$("publish-secure");try{const session=await requireOwner();if(!confirm("Publish the current Hydro website changes now?"))return;btn.disabled=true;btn.textContent="Publishing...";const files=[];for(const[key,pkg]of Object.entries(pendingPhotos)){const meta=PHOTO_META[key];state.site.photos[key]=meta.path;files.push({path:meta.path,base64:pkg.base64,contentType:pkg.type})}const res=await fetch(authCfg.PUBLISH_API_URL,{method:"POST",headers:{"Content-Type":"application/json","Authorization":`Bearer ${session.access_token}`},body:JSON.stringify({content:dataText(),files,message:$("publish-message").value.trim()||"Update Hydro website"})});const payload=await res.json().catch(()=>({}));if(!res.ok)throw new Error(payload.error||payload.message||`Publish failed (${res.status})`);pendingPhotos={};renderPhotos();localStorage.setItem(STORAGE_KEY,JSON.stringify(state));status(`Published successfully${payload.commit?` — commit ${payload.commit}`:""}.`)}catch(e){status(e.message,true)}finally{btn.disabled=false;btn.textContent="Publish Website"}};
+$("export-backup").onclick=()=>{const blob=new Blob([dataText()],{type:"application/javascript"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="site-data.js";a.click();URL.revokeObjectURL(url)};
+loadContent();loadEvents();renderCategory();loadDesign();renderPhotos();requireOwner();
+</script></body></html>
