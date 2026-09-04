@@ -68,18 +68,18 @@ window.HYDRO_SITE = {
     "showStory": true
   },
   "design": {
-    "preset": "Warm Napa",
-    "primary": "#4a2f24",
-    "accent": "#b45f2a",
-    "surface": "#f8f1e7",
+    "preset": "Hydro Classic",
+    "primary": "#002244",
+    "accent": "#cc5500",
+    "surface": "#f4f7f6",
     "headingStyle": "serif",
-    "cornerStyle": "soft",
-    "heroOverlay": 62,
-    "buttonStyle": "soft",
+    "cornerStyle": "rounded",
+    "heroOverlay": 68,
+    "buttonStyle": "pill",
     "bodyScale": "normal"
   },
   "photos": {
-    "hero": "HydroBuilding.jpg",
+    "hero": "assets/hero.jpg",
     "logo": "HydroLogo.png",
     "story": "HydroBuilding.jpg",
     "cocktails": "CraftCocktails.jpg"
