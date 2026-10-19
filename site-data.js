@@ -107,7 +107,7 @@ window.HYDRO_SITE = {
     "showPrivateEvents": false,
     "announcement": {
       "enabled": true,
-      "text": "Live entertainment Halloween come by and enjoy the festivities with good music and food ",
+      "text": "Live entertainment Halloween come by and enjoy the festivities with great music and food! ",
       "buttonLabel": "View Events",
       "buttonHref": "#entertainment"
     },
