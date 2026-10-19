@@ -108,8 +108,8 @@ window.HYDRO_SITE = {
     "announcement": {
       "enabled": true,
       "text": "Live entertainment Halloween come by and enjoy the festivities with great music and food! ",
-      "buttonLabel": "View Events",
-      "buttonHref": "#entertainment"
+      "buttonLabel": "",
+      "buttonHref": ""
     },
     "privateEvents": {
       "eyebrow": "Celebrate at Hydro",
