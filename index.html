@@ -166,7 +166,7 @@
   <section id="announcement" class="hidden max-w-6xl mx-auto px-4 sm:px-6 pt-10 scroll-mt-24">
     <div class="bg-hydro-orange text-white rounded-2xl px-5 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 shadow-sm">
       <p id="announcement-text" class="font-semibold"></p>
-      <a id="announcement-button" href="#entertainment" class="bg-white text-hydro-blue px-5 py-2.5 rounded-full font-bold text-sm whitespace-nowrap">View Events</a>
+      <a id="announcement-button" href="#" class="hidden bg-white text-hydro-blue px-5 py-2.5 rounded-full font-bold text-sm whitespace-nowrap">Learn More</a>
     </div>
   </section>
 
@@ -376,7 +376,7 @@
   </div>
 </div>
 
-<script src="site-data.js"></script>
+<script src="site-data.js?v=20261018-announcements"></script>
 <script>
   if(new URLSearchParams(location.search).get("preview")==="1"){
     try{const saved=JSON.parse(localStorage.getItem("hydro-admin-draft-v9-2")||"null"),draft=saved?.state||saved;if(draft?.site&&draft?.menu){window.HYDRO_SITE=draft.site;window.HYDRO_MENU=draft.menu;document.title="Preview — "+document.title}}catch(e){}
@@ -404,7 +404,7 @@
     if(d.headingStyle==="sans")document.querySelectorAll(".font-serif").forEach(el=>el.style.fontFamily="Inter,sans-serif");
     if(d.cornerStyle==="square")document.querySelectorAll(".rounded-3xl,.rounded-2xl").forEach(el=>el.style.borderRadius=".25rem");if(d.cornerStyle==="soft")document.querySelectorAll(".rounded-3xl").forEach(el=>el.style.borderRadius=".9rem");
     const story=document.querySelector("#about>div");if(story){story.classList.remove("story-photo-left","story-full");if(l.storyLayout==="image-left")story.classList.add("story-photo-left");if(l.storyLayout==="full")story.classList.add("story-full")}
-    const ann=l.announcement||{};const annSec=document.getElementById("announcement");if(annSec){annSec.hidden=!ann.enabled;annSec.classList.toggle("hidden",!ann.enabled);setText("announcement-text",ann.text||"");const a=document.getElementById("announcement-button");if(a){a.textContent=ann.buttonLabel||"Learn More";a.href=ann.buttonHref||"#"}}
+    const ann=l.announcement||{};const annSec=document.getElementById("announcement");if(annSec){const today=new Date().toLocaleDateString("en-CA",{timeZone:"America/Los_Angeles"});const active=!!ann.enabled&&!!String(ann.text||"").trim()&&(!ann.startDate||today>=ann.startDate)&&(!ann.endDate||today<=ann.endDate);annSec.hidden=!active;annSec.classList.toggle("hidden",!active);annSec.style.display=active?"block":"none";setText("announcement-text",ann.text||"");const a=document.getElementById("announcement-button");if(a){const show=!!String(ann.buttonLabel||"").trim()&&!!String(ann.buttonHref||"").trim();a.hidden=!show;a.classList.toggle("hidden",!show);a.textContent=ann.buttonLabel||"Learn More";a.href=ann.buttonHref||"#"}}
     const pe=l.privateEvents||{};setText("private-events-eyebrow",pe.eyebrow);setText("private-events-title",pe.title);setText("private-events-text",pe.text);const peb=document.getElementById("private-events-button");if(peb){peb.textContent=pe.buttonLabel||"Contact Hydro";peb.href=pe.buttonHref||"tel:+17079429777"}
     const order=(Array.isArray(l.sectionOrder)?l.sectionOrder:[]).filter(id=>id!=="today");const main=document.querySelector("main");order.forEach(id=>{const el=document.getElementById(id);if(el&&main)main.appendChild(el)});
   }
