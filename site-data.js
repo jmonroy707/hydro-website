@@ -39,9 +39,9 @@ window.HYDRO_SITE = {
     },
     {
       "day": "Saturday",
-      "title": "DJ CaliB",
+      "title": "Monflower Jazz Duo",
       "time": "6:00 PM",
-      "description": "Saturday night music, dinner and drinks."
+      "description": "Jazz classics from the American Storybook"
     },
     {
       "day": "Sunday",
@@ -79,14 +79,13 @@ window.HYDRO_SITE = {
     "bodyScale": "normal"
   },
   "photos": {
-    "hero": "assets/hero.jpg",
+    "hero": "assets/hero.jpg?v=1792387915138",
     "logo": "HydroLogo.png",
     "story": "HydroBuilding.jpg",
     "cocktails": "CraftCocktails.jpg"
   },
   "layout": {
     "sectionOrder": [
-      "today",
       "favorites",
       "menus",
       "drinks",
@@ -107,8 +106,8 @@ window.HYDRO_SITE = {
     "showHappyHour": true,
     "showPrivateEvents": false,
     "announcement": {
-      "enabled": false,
-      "text": "Tonight at Hydro — dinner, drinks and local entertainment.",
+      "enabled": true,
+      "text": "Live entertainment Halloween come by and enjoy the festivities with good music and food ",
       "buttonLabel": "View Events",
       "buttonHref": "#entertainment"
     },
